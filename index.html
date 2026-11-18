@@ -130,11 +130,11 @@
       <div><b>Mac</b><span>Mac App Store · Apple M1 і новіші</span></div>
       <div class="cta">App Store <iconify-icon icon="ph:arrow-up-right-bold"></iconify-icon></div>
     </a>
-    <div class="row soon" data-os="windows">
+    <a class="row" data-os="windows" href="https://github.com/o-ly/road-tracker-releases/releases/download/v1.6.3/Road.Tracker_1.6.3_x64-setup.exe">
       <div class="ico"><iconify-icon icon="ph:windows-logo-fill"></iconify-icon></div>
-      <div><b>Windows</b><span>Інсталятор .exe · Windows 10 і 11</span></div>
-      <div class="cta">Скоро</div>
-    </div>
+      <div><b>Windows</b><span>Інсталятор .exe · v1.6.3 · Windows 10 і 11</span></div>
+      <div class="cta">EXE <iconify-icon icon="ph:download-simple-bold"></iconify-icon></div>
+    </a>
   </div>
 
   <div class="qr" id="qr">
@@ -160,7 +160,8 @@
   var labels = {
     ios: ['ph:apple-logo-fill', 'Завантажити в App Store', 'Для iPhone та iPad'],
     android: ['ph:android-logo-fill', 'Завантажити для Android', 'Файл APK · v1.6.3'],
-    mac: ['ph:laptop-fill', 'Відкрити в Mac App Store', 'Для Mac з Apple M1 і новіших']
+    mac: ['ph:laptop-fill', 'Відкрити в Mac App Store', 'Для Mac з Apple M1 і новіших'],
+    windows: ['ph:windows-logo-fill', 'Завантажити для Windows', 'Інсталятор .exe · v1.6.3']
   };
   var row = document.querySelector('.row[data-os="' + os + '"]');
   if (row) row.classList.add('current');
