@@ -75,6 +75,17 @@
   .row.soon .cta { color: var(--muted); }
   .row.current .ico { background: var(--accent); color: var(--accent-ink); }
 
+  .support {
+    display: grid; grid-template-columns: 44px 1fr; gap: 6px 14px; align-items: start; text-decoration: none; color: inherit;
+    padding: 18px; border-radius: var(--radius); border: 1px solid rgba(34,211,238,.35);
+    background: linear-gradient(135deg, rgba(34,211,238,.12), rgba(34,211,238,.02));
+    transition: border-color .25s var(--ease), transform .25s var(--ease);
+  }
+  .support:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .support .ico { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--accent); color: var(--accent-ink); font-size: 24px; }
+  .support b { display: block; font-size: 17px; margin-bottom: 2px; }
+  .support span { color: var(--muted); font-size: 14px; }
+  .support .cta { grid-column: 2; font-size: 14px; font-weight: 700; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; }
   .qr { display: none; margin-top: 48px; gap: 20px; align-items: center; padding: 20px; border: 1px solid var(--line); border-radius: var(--radius); }
   .qr.show { display: flex; }
   .qr #qrcode { background: #fff; padding: 10px; border-radius: 12px; line-height: 0; flex-shrink: 0; }
@@ -136,6 +147,16 @@
       <div class="cta">EXE <iconify-icon icon="ph:download-simple-bold"></iconify-icon></div>
     </a>
   </div>
+
+  <h2>Підтримати автора</h2>
+  <a class="support" href="https://send.monobank.ua/jar/88JdtX8JkT" target="_blank" rel="noopener">
+    <div class="ico"><iconify-icon icon="ph:hand-heart-fill"></iconify-icon></div>
+    <div>
+      <b>На нове авто для служіння</b>
+      <span>Застосунок безкоштовний. Якщо він вам допомагає, долучіться до збору: ціль 200&nbsp;000&nbsp;₴.</span>
+    </div>
+    <div class="cta">Банка monobank <iconify-icon icon="ph:arrow-up-right-bold"></iconify-icon></div>
+  </a>
 
   <div class="qr" id="qr">
     <div id="qrcode"></div>
