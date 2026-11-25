@@ -92,6 +92,9 @@
   .qr p { margin: 0; color: var(--muted); font-size: 15px; }
   .qr p b { color: var(--text); display: block; font-size: 17px; margin-bottom: 4px; }
 
+  .langs { margin-left: auto; display: flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; }
+  .langs a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 700; padding: 6px 10px; border-radius: 999px; }
+  .langs a.on { background: rgba(255,255,255,.1); color: var(--text); }
   footer { margin-top: 56px; color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 8px 20px; }
   footer a { color: var(--muted); }
 
@@ -113,6 +116,7 @@
       <p class="eyebrow">Road Tracker UA</p>
       <div style="color:var(--muted);font-size:14px">Центральна конференція АСД</div>
     </div>
+    <nav class="langs"><a href="./" data-lang="uk" class="on">UA</a><a href="en/" data-lang="en">EN</a></nav>
   </header>
 
   <h1 class="reveal">Поїздки, пальне,<br><span>звіти.</span></h1>
@@ -148,15 +152,6 @@
     </a>
   </div>
 
-  <h2>Підтримати автора</h2>
-  <a class="support" href="https://send.monobank.ua/jar/88JdtX8JkT" target="_blank" rel="noopener">
-    <div class="ico"><iconify-icon icon="ph:hand-heart-fill"></iconify-icon></div>
-    <div>
-      <b>На нове авто для служіння</b>
-      <span>Застосунок безкоштовний. Якщо він вам допомагає, долучіться до збору: ціль 200&nbsp;000&nbsp;₴.</span>
-    </div>
-    <div class="cta">Банка monobank <iconify-icon icon="ph:arrow-up-right-bold"></iconify-icon></div>
-  </a>
 
   <div class="qr" id="qr">
     <div id="qrcode"></div>
@@ -171,6 +166,15 @@
 
 <script>
 (function () {
+  try {
+    var chosen = localStorage.getItem('lang');
+    var langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+    var ukUser = langs.some(function (l) { return /^uk\b|-UA$/i.test(l) });
+    if (!chosen && !ukUser) { location.replace('en/'); return; }
+  } catch (e) {}
+  document.querySelectorAll('.langs a').forEach(function (a) {
+    a.addEventListener('click', function () { try { localStorage.setItem('lang', a.dataset.lang) } catch (e) {} });
+  });
   var ua = navigator.userAgent, os = 'other';
   var iPadOS = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;
   if (/Android/.test(ua)) os = 'android';

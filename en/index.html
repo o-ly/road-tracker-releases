@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Road Tracker UA — download</title>
+<meta name="description" content="Trip and fuel logbook for iPhone, iPad, Mac, Android and Windows.">
+<meta property="og:title" content="Road Tracker UA">
+<meta property="og:description" content="Trip and fuel logbook. Download for your device.">
+<meta property="og:image" content="https://o-ly.github.io/road-tracker-releases/assets/icon.png">
+<link rel="icon" href="../assets/icon.png">
+<link rel="apple-touch-icon" href="../assets/icon.png">
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root {
+    --navy: #07071A;
+    --navy-2: #0F1230;
+    --line: rgba(255,255,255,.10);
+    --text: #F1F5F9;
+    --muted: #94A3B8;
+    --accent: #22D3EE;
+    --accent-ink: #0B1B33;
+    --radius: 20px;
+    --ease: cubic-bezier(.2,.8,.2,1);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; min-height: 100dvh; background: var(--navy); color: var(--text);
+    font: 16px/1.5 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .glow {
+    position: fixed; inset: 0 0 auto 0; height: 70vh; z-index: 0; pointer-events: none;
+    background: url(../assets/hero.jpg) center/cover no-repeat;
+    filter: blur(40px) saturate(1.4); opacity: .55; transform: scale(1.2);
+    -webkit-mask-image: linear-gradient(#000 30%, transparent);
+            mask-image: linear-gradient(#000 30%, transparent);
+  }
+  main { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: max(48px, env(safe-area-inset-top)) 16px 64px; }
+  header { display: flex; align-items: center; gap: 16px; }
+  header img { width: 72px; height: 72px; border-radius: 18px; box-shadow: 0 12px 40px -12px rgba(34,211,238,.6); }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin: 0 0 2px; }
+  h1 { font-size: clamp(40px, 9vw, 76px); line-height: .95; letter-spacing: -.035em; margin: 40px 0 16px; font-weight: 800; }
+  h1 span { color: var(--accent); }
+  .lead { color: var(--muted); font-size: 18px; max-width: 30ch; margin: 0 0 32px; }
+
+  .primary {
+    display: flex; align-items: center; gap: 14px; text-decoration: none;
+    background: var(--accent); color: var(--accent-ink); border-radius: var(--radius);
+    padding: 18px 22px; font-weight: 800; font-size: 18px;
+    box-shadow: 0 20px 50px -20px rgba(34,211,238,.8);
+    transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+  }
+  .primary:hover { transform: translateY(-2px); box-shadow: 0 26px 60px -20px rgba(34,211,238,.9); }
+  .primary:active { transform: scale(.98); }
+  .primary iconify-icon { font-size: 30px; }
+  .primary small { display: block; font-weight: 600; font-size: 13px; opacity: .7; }
+  .primary .go { margin-left: auto; font-size: 22px; }
+
+  h2 { font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 48px 0 12px; }
+  .list { border-top: 1px solid var(--line); }
+  .row {
+    display: grid; grid-template-columns: 44px 1fr auto; align-items: center; gap: 14px;
+    padding: 16px 4px; border-bottom: 1px solid var(--line); text-decoration: none; color: inherit;
+    transition: background .2s var(--ease), padding .2s var(--ease);
+  }
+  a.row:hover { background: rgba(255,255,255,.04); padding-left: 10px; }
+  .row .ico { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: rgba(255,255,255,.06); font-size: 24px; }
+  .row b { display: block; font-size: 17px; }
+  .row span { color: var(--muted); font-size: 14px; }
+  .row .cta { font-size: 14px; font-weight: 700; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .row.soon { opacity: .55; }
+  .row.soon .cta { color: var(--muted); }
+  .row.current .ico { background: var(--accent); color: var(--accent-ink); }
+
+  .support {
+    display: grid; grid-template-columns: 44px 1fr; gap: 6px 14px; align-items: start; text-decoration: none; color: inherit;
+    padding: 18px; border-radius: var(--radius); border: 1px solid rgba(34,211,238,.35);
+    background: linear-gradient(135deg, rgba(34,211,238,.12), rgba(34,211,238,.02));
+    transition: border-color .25s var(--ease), transform .25s var(--ease);
+  }
+  .support:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .support .ico { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--accent); color: var(--accent-ink); font-size: 24px; }
+  .support b { display: block; font-size: 17px; margin-bottom: 2px; }
+  .support span { color: var(--muted); font-size: 14px; }
+  .support .cta { grid-column: 2; font-size: 14px; font-weight: 700; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; }
+  .qr { display: none; margin-top: 48px; gap: 20px; align-items: center; padding: 20px; border: 1px solid var(--line); border-radius: var(--radius); }
+  .qr.show { display: flex; }
+  .qr #qrcode { background: #fff; padding: 10px; border-radius: 12px; line-height: 0; flex-shrink: 0; }
+  .qr p { margin: 0; color: var(--muted); font-size: 15px; }
+  .qr p b { color: var(--text); display: block; font-size: 17px; margin-bottom: 4px; }
+
+  .langs { margin-left: auto; display: flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; }
+  .langs a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 700; padding: 6px 10px; border-radius: 999px; }
+  .langs a.on { background: rgba(255,255,255,.1); color: var(--text); }
+  footer { margin-top: 56px; color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 8px 20px; }
+  footer a { color: var(--muted); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal { opacity: 0; transform: translateY(12px); animation: in .7s var(--ease) forwards; }
+    .reveal:nth-child(2) { animation-delay: .06s } .reveal:nth-child(3) { animation-delay: .12s }
+    .reveal:nth-child(4) { animation-delay: .18s } .reveal:nth-child(5) { animation-delay: .24s }
+    @keyframes in { to { opacity: 1; transform: none; } }
+  }
+  @media (max-width: 480px) { .row span { font-size: 13px; } .qr { display: none !important; } }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<main>
+  <header class="reveal">
+    <img src="../assets/icon.png" alt="">
+    <div>
+      <p class="eyebrow">Road Tracker UA</p>
+      <div style="color:var(--muted);font-size:14px">Central Ukrainian Conference of SDA</div>
+    </div>
+    <nav class="langs"><a href="../" data-lang="uk">UA</a><a href="./" data-lang="en" class="on">EN</a></nav>
+  </header>
+
+  <h1 class="reveal">Trips, fuel,<br><span>reports.</span></h1>
+  <p class="lead reveal">A mileage and fuel log with PDF and Excel reports. Your data stays on your device.</p>
+
+  <a id="primary" class="primary reveal" href="#platforms">
+    <iconify-icon id="primary-ico" icon="ph:download-simple-bold"></iconify-icon>
+    <div><span id="primary-label">Download</span><small id="primary-sub">Choose your platform below</small></div>
+    <iconify-icon class="go" icon="ph:arrow-right-bold"></iconify-icon>
+  </a>
+
+  <h2 id="platforms">All platforms</h2>
+  <div class="list">
+    <a class="row" data-os="ios" href="https://apps.apple.com/app/road-tracker-ua/id6833131268">
+      <div class="ico"><iconify-icon icon="ph:apple-logo-fill"></iconify-icon></div>
+      <div><b>iPhone and iPad</b><span>App Store · iOS 15 or later</span></div>
+      <div class="cta">App Store <iconify-icon icon="ph:arrow-up-right-bold"></iconify-icon></div>
+    </a>
+    <a class="row" data-os="android" href="https://github.com/o-ly/road-tracker-releases/releases/download/v1.6.3/RoadTracker-v1.6.3.apk">
+      <div class="ico"><iconify-icon icon="ph:android-logo-fill"></iconify-icon></div>
+      <div><b>Android</b><span>APK file · v1.6.3 · 12 MB</span></div>
+      <div class="cta">APK <iconify-icon icon="ph:download-simple-bold"></iconify-icon></div>
+    </a>
+    <a class="row" data-os="mac" href="https://apps.apple.com/app/road-tracker-ua/id6833131268">
+      <div class="ico"><iconify-icon icon="ph:laptop-fill"></iconify-icon></div>
+      <div><b>Mac</b><span>Mac App Store · Apple M1 or newer</span></div>
+      <div class="cta">App Store <iconify-icon icon="ph:arrow-up-right-bold"></iconify-icon></div>
+    </a>
+    <a class="row" data-os="windows" href="https://github.com/o-ly/road-tracker-releases/releases/download/v1.6.3/Road.Tracker_1.6.3_x64-setup.exe">
+      <div class="ico"><iconify-icon icon="ph:windows-logo-fill"></iconify-icon></div>
+      <div><b>Windows</b><span>.exe installer · v1.6.3 · Windows 10 and 11</span></div>
+      <div class="cta">EXE <iconify-icon icon="ph:download-simple-bold"></iconify-icon></div>
+    </a>
+  </div>
+
+
+  <h2>Support the author</h2>
+  <a class="support" href="https://send.monobank.ua/jar/88JdtX8JkT" target="_blank" rel="noopener">
+    <div class="ico"><iconify-icon icon="ph:hand-heart-fill"></iconify-icon></div>
+    <div>
+      <b>A new car for ministry</b>
+      <span>The app is free. If it helps you, you can chip in: the goal is 200,000&nbsp;UAH.</span>
+    </div>
+    <div class="cta">Donate via monobank <iconify-icon icon="ph:arrow-up-right-bold"></iconify-icon></div>
+  </a>
+
+  <div class="qr" id="qr">
+    <div id="qrcode"></div>
+    <p><b>Open on your phone</b>Point your camera here — the page will offer the right version for your device.</p>
+  </div>
+
+  <footer>
+    <a href="../privacy.html">Privacy policy</a>
+    <span>Android: install over the previous version — your data is kept.</span>
+  </footer>
+</main>
+
+<script>
+(function () {
+  document.querySelectorAll('.langs a').forEach(function (a) {
+    a.addEventListener('click', function () { try { localStorage.setItem('lang', a.dataset.lang) } catch (e) {} });
+  });
+  var ua = navigator.userAgent, os = 'other';
+  var iPadOS = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+  if (/Android/.test(ua)) os = 'android';
+  else if (/iPhone|iPad|iPod/.test(ua) || iPadOS) os = 'ios';
+  else if (/Macintosh/.test(ua)) os = 'mac';
+  else if (/Windows/.test(ua)) os = 'windows';
+
+  var labels = {
+    ios: ['ph:apple-logo-fill', 'Download on the App Store', 'For iPhone and iPad'],
+    android: ['ph:android-logo-fill', 'Download for Android', 'APK file · v1.6.3'],
+    mac: ['ph:laptop-fill', 'Open in the Mac App Store', 'For Macs with Apple M1 or newer'],
+    windows: ['ph:windows-logo-fill', 'Download for Windows', '.exe installer · v1.6.3']
+  };
+  var row = document.querySelector('.row[data-os="' + os + '"]');
+  if (row) row.classList.add('current');
+  if (labels[os] && row && row.href) {
+    var p = document.getElementById('primary');
+    p.href = row.href;
+    document.getElementById('primary-ico').setAttribute('icon', labels[os][0]);
+    document.getElementById('primary-label').textContent = labels[os][1];
+    document.getElementById('primary-sub').textContent = labels[os][2];
+  }
+  if ((os === 'mac' || os === 'windows' || os === 'other') && window.QRCode) {
+    new QRCode(document.getElementById('qrcode'), { text: 'https://o-ly.github.io/road-tracker-releases/en/', width: 112, height: 112, colorDark: '#07071A', colorLight: '#ffffff' });
+    document.getElementById('qr').classList.add('show');
+  }
+})();
+</script>
+</body>
+</html>
